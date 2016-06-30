@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.0)
 project(kabufuda)
 
-if(NOT TARGET urde)
+if(NOT TARGET hecl)
     if(NOT MSVC)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
     endif()
 endif()
 
@@ -20,6 +20,4 @@ add_library(kabufuda STATIC
     include/kabufuda/SRAM.hpp lib/kabufuda/SRAM.cpp
     include/kabufuda/WideStringConvert.hpp lib/kabufuda/WideStringConvert.cpp)
 
-if (NOT TARGET hecl)
-    add_subdirectory(test)
-endif()
+add_subdirectory(test)
