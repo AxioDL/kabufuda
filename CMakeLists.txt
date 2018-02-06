@@ -9,11 +9,14 @@ set(KABUFUDA_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE PATH "kabufud
 
 unset(PLAT_SRCS)
 if(WIN32)
-list(APPEND PLAT_SRCS lib/kabufuda/winsupport.cpp include/kabufuda/winsupport.hpp)
+list(APPEND PLAT_SRCS lib/kabufuda/winsupport.cpp include/kabufuda/winsupport.hpp lib/kabufuda/AsyncIOWin32.cpp)
+else()
+list(APPEND PLAT_SRCS lib/kabufuda/AsyncIOPosix.cpp)
 endif()
 
 add_library(kabufuda STATIC
     include/kabufuda/Constants.hpp
+    include/kabufuda/AsyncIO.hpp
     include/kabufuda/BlockAllocationTable.hpp lib/kabufuda/BlockAllocationTable.cpp
     include/kabufuda/Card.hpp lib/kabufuda/Card.cpp
     include/kabufuda/Directory.hpp lib/kabufuda/Directory.cpp
