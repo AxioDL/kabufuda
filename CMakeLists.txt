@@ -4,8 +4,8 @@ project(kabufuda)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-include_directories(include)
-set(KABUFUDA_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE PATH "kabufuda include path" FORCE)
+unset(KABUFUDA_INCLUDE_DIR CACHE)
+#set(KABUFUDA_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE PATH "kabufuda include path" FORCE)
 
 unset(PLAT_SRCS)
 if(WIN32)
@@ -25,5 +25,6 @@ add_library(kabufuda STATIC
     include/kabufuda/SRAM.hpp lib/kabufuda/SRAM.cpp
     include/kabufuda/WideStringConvert.hpp lib/kabufuda/WideStringConvert.cpp
     ${PLAT_SRCS})
+target_include_directories(kabufuda PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 
 add_subdirectory(test)
