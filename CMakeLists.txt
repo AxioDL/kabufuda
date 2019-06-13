@@ -9,7 +9,7 @@ unset(KABUFUDA_INCLUDE_DIR CACHE)
 
 unset(PLAT_SRCS)
 if(WIN32)
-list(APPEND PLAT_SRCS lib/kabufuda/winsupport.cpp include/kabufuda/winsupport.hpp lib/kabufuda/AsyncIOWin32.cpp)
+list(APPEND PLAT_SRCS include/kabufuda/winsupport.hpp lib/kabufuda/AsyncIOWin32.cpp)
 else()
 list(APPEND PLAT_SRCS lib/kabufuda/AsyncIOPosix.cpp)
 endif()
