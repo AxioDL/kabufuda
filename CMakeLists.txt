@@ -20,6 +20,25 @@ add_library(kabufuda STATIC
 )
 
 if(WIN32)
+  if (MSVC)
+    target_compile_options(kabufuda PRIVATE
+      # Enforce various standards compliant behavior.
+      /permissive-
+
+      # Enable standard volatile semantics.
+      /volatile:iso
+
+      # Reports the proper value for the __cplusplus preprocessor macro.
+      /Zc:__cplusplus
+
+      # Allow constexpr variables to have explicit external linkage.
+      /Zc:externConstexpr
+
+      # Assume that new throws exceptions, allowing better code generation.
+      /Zc:throwingNew
+    )
+  endif()
+
   target_sources(kabufuda PRIVATE
     include/kabufuda/winsupport.hpp
     lib/kabufuda/AsyncIOWin32.cpp
