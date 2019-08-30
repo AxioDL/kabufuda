@@ -4,9 +4,6 @@ project(kabufuda)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-unset(KABUFUDA_INCLUDE_DIR CACHE)
-#set(KABUFUDA_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include CACHE PATH "kabufuda include path" FORCE)
-
 add_library(kabufuda STATIC
     include/kabufuda/Constants.hpp
     include/kabufuda/AsyncIO.hpp
