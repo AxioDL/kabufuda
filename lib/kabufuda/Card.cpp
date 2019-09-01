@@ -689,7 +689,7 @@ bool Card::moveFileTo(FileHandle& fh, Card& dest)
 
 void Card::setCurrentGame(const char* game) {
   if (game == nullptr) {
-    memset(m_game, 0, 2);
+    memset(m_game, 0, sizeof(m_game));
     return;
   }
 
