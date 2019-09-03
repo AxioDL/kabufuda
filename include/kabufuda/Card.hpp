@@ -17,14 +17,14 @@ namespace kabufuda {
 
 class FileHandle {
   friend class Card;
-  uint32_t idx = -1;
+  uint32_t idx = UINT32_MAX;
   int32_t offset = 0;
-  FileHandle(uint32_t idx) : idx(idx) {}
+  explicit FileHandle(uint32_t idx) : idx(idx) {}
 
 public:
   FileHandle() = default;
   uint32_t getFileNo() const { return idx; }
-  operator bool() const { return getFileNo() != UINT32_MAX; }
+  explicit operator bool() const { return getFileNo() != UINT32_MAX; }
 };
 
 struct ProbeResults {
@@ -136,7 +136,7 @@ public:
    * @param game  The game code.
    * @param maker The maker code.
    */
-  Card(const char* game = nullptr, const char* maker = nullptr);
+  explicit Card(const char* game = nullptr, const char* maker = nullptr);
   ~Card();
 
   /**
@@ -489,6 +489,6 @@ public:
   /**
    * @return Whether or not the card is within a ready state.
    */
-  operator bool() const { return getError() == ECardResult::READY; }
+  explicit operator bool() const { return getError() == ECardResult::READY; }
 };
 } // namespace kabufuda
