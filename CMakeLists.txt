@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.10 FATAL_ERROR) # because of c++17
 project(kabufuda)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+if (NOT MSVC)
+  set(CMAKE_CXX_STANDARD 20)
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
+endif()
 
 add_library(kabufuda STATIC
     include/kabufuda/Constants.hpp
@@ -20,20 +22,27 @@ if(WIN32)
   if (MSVC)
     target_compile_options(kabufuda PRIVATE
       # Enforce various standards compliant behavior.
-      /permissive-
+      $<$<COMPILE_LANGUAGE:CXX>:/permissive->
 
       # Enable standard volatile semantics.
-      /volatile:iso
+      $<$<COMPILE_LANGUAGE:CXX>:/volatile:iso>
 
       # Reports the proper value for the __cplusplus preprocessor macro.
-      /Zc:__cplusplus
+      $<$<COMPILE_LANGUAGE:CXX>:/Zc:__cplusplus>
 
-      # Allow constexpr variables to have explicit external linkage.
-      /Zc:externConstexpr
-
-      # Assume that new throws exceptions, allowing better code generation.
-      /Zc:throwingNew
+      # Use latest C++ standard.
+      $<$<COMPILE_LANGUAGE:CXX>:/std:c++latest>
     )
+    if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+      # Flags for MSVC (not clang-cl)
+      target_compile_options(kabufuda PRIVATE
+        # Allow constexpr variables to have explicit external linkage.
+        $<$<COMPILE_LANGUAGE:CXX>:/Zc:externConstexpr>
+
+        # Assume that new throws exceptions, allowing better code generation.
+        $<$<COMPILE_LANGUAGE:CXX>:/Zc:throwingNew>
+      )
+    endif()
   endif()
 
   target_sources(kabufuda PRIVATE
