@@ -53,6 +53,9 @@ else()
   target_sources(kabufuda PRIVATE
     lib/kabufuda/AsyncIOPosix.cpp
   )
+  if(NOT APPLE)
+    target_link_libraries(kabufuda PUBLIC rt)
+  endif()
 endif()
 
 target_include_directories(kabufuda PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
