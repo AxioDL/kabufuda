@@ -49,6 +49,10 @@ if(WIN32)
     include/kabufuda/winsupport.hpp
     lib/kabufuda/AsyncIOWin32.cpp
   )
+elseif(NX)
+  target_sources(kabufuda PRIVATE
+    lib/kabufuda/AsyncIONX.cpp
+  )
 else()
   target_sources(kabufuda PRIVATE
     lib/kabufuda/AsyncIOPosix.cpp
