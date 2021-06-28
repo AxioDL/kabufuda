@@ -15,7 +15,6 @@ add_library(kabufuda STATIC
     include/kabufuda/File.hpp lib/kabufuda/File.cpp
     include/kabufuda/Util.hpp lib/kabufuda/Util.cpp
     include/kabufuda/SRAM.hpp lib/kabufuda/SRAM.cpp
-    include/kabufuda/WideStringConvert.hpp lib/kabufuda/WideStringConvert.cpp
 )
 
 if(WIN32)
