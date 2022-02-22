@@ -45,7 +45,6 @@ if(WIN32)
   endif()
 
   target_sources(kabufuda PRIVATE
-    include/kabufuda/winsupport.hpp
     lib/kabufuda/AsyncIOWin32.cpp
   )
 elseif(NX)
