@@ -5,7 +5,9 @@
 
 namespace kabufuda {
 
-AsyncIO::AsyncIO(std::string_view filename, bool truncate) { m_fd = fopen(filename.data(), truncate ? "rw" : "ra"); }
+AsyncIO::AsyncIO(std::string_view filename, bool truncate) {
+  m_fd = fopen(filename.data(), truncate ? "wb+" : "rb+");
+}
 
 AsyncIO::~AsyncIO() {
   if (*this) {
@@ -32,11 +34,15 @@ AsyncIO& AsyncIO::operator=(AsyncIO&& other) {
 void AsyncIO::_waitForOperation(size_t qIdx) const {}
 
 bool AsyncIO::asyncRead(size_t qIdx, void* buf, size_t length, off_t offset) {
-  return fread(buf, length, offset, m_fd);
+  if (!m_fd || fseeko(m_fd, offset, SEEK_SET) != 0)
+    return false;
+  return fread(buf, 1, length, m_fd) == length;
 }
 
 bool AsyncIO::asyncWrite(size_t qIdx, const void* buf, size_t length, off_t offset) {
-  return fwrite(buf, length, offset, m_fd);
+  if (!m_fd || fseeko(m_fd, offset, SEEK_SET) != 0)
+    return false;
+  return fwrite(buf, 1, length, m_fd) == length;
 }
 
 ECardResult AsyncIO::pollStatus(size_t qIdx, SizeReturn* szRet) const { return ECardResult::READY; }

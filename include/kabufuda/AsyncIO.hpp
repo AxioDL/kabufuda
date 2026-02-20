@@ -1,7 +1,7 @@
 #pragma once
 
 #ifndef _WIN32
-#ifdef __SWITCH__
+#if defined(__SWITCH__) || defined(__ANDROID__)
 #include <sys/types.h>
 using SizeReturn = ssize_t;
 #else
@@ -23,7 +23,7 @@ struct AsyncIOInner;
 #endif
 
 class AsyncIO {
-#if defined(__SWITCH__) || defined(EMSCRIPTEN)
+#if defined(__SWITCH__) || defined(EMSCRIPTEN) || defined(__ANDROID__)
   FILE* m_fd;
 #elif !defined(_WIN32)
   int m_fd = -1;
@@ -48,7 +48,7 @@ public:
   ECardResult pollStatus(size_t qIdx, SizeReturn* szRet = nullptr) const;
   ECardResult pollStatus() const;
   void waitForCompletion() const;
-#if defined(__SWITCH__) || defined(EMSCRIPTEN)
+#if defined(__SWITCH__) || defined(EMSCRIPTEN) || defined(__ANDROID__)
   explicit operator bool() const { return m_fd != nullptr; }
 #elif !defined(_WIN32)
   explicit operator bool() const { return m_fd != -1; }

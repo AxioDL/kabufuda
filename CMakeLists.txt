@@ -47,7 +47,7 @@ if(WIN32)
   target_sources(kabufuda PRIVATE
     lib/kabufuda/AsyncIOWin32.cpp
   )
-elseif(NX OR EMSCRIPTEN)
+elseif(NX OR EMSCRIPTEN OR ANDROID)
   target_sources(kabufuda PRIVATE
     lib/kabufuda/AsyncIONX.cpp
   )
